@@ -3,7 +3,7 @@ import { Container, Loading, Title } from "./styles";
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export function Button({ isLoading = false, title, ...rest }: ButtonProps) {

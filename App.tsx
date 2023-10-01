@@ -1,3 +1,6 @@
+import "react-native-get-random-values";
+import "./src/libs/dayjs";
+
 import { ThemeProvider } from "styled-components/native";
 import { SignIn } from "./src/screens/SignIn";
 import {
@@ -9,7 +12,9 @@ import { Loading } from "./src/components/Loading";
 import { StatusBar } from "react-native";
 import { AppProvider, UserProvider } from "@realm/react";
 import { REALM_APP_ID } from "@env";
-import { Home } from "./src/screens/Home";
+import { Routes } from "./src/routes";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { RealmProvider } from "./src/libs/realm";
 
 import theme from "./src/theme";
 
@@ -23,14 +28,19 @@ export default function App() {
   return (
     <AppProvider id={REALM_APP_ID}>
       <ThemeProvider theme={theme}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent
-        />
-        <UserProvider fallback={SignIn}>
-          <Home />
-        </UserProvider>
+        <SafeAreaProvider
+          style={{ flex: 1, backgroundColor: theme.COLORS.GRAY_800 }}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent
+          />
+          <UserProvider fallback={SignIn}>
+            <RealmProvider>
+              <Routes />
+            </RealmProvider>
+          </UserProvider>
+        </SafeAreaProvider>
       </ThemeProvider>
     </AppProvider>
   );
